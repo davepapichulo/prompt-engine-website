@@ -6,8 +6,18 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
 
-const isUserLoginIn = true;
+
 const Navbar = () => {
+  const isUserLoginIn = true;
+  const [providers, setProviders] = useState(null);
+  useEffect(() => {
+      const setProviders = async () => {
+        const response = await getProviders();
+
+        setProviders(response);
+      }
+  }, [ ])
+
   return (
    <nav className='flex-between w-full mb-16 pt-5'>
       <Link href ='/' className='flex items-center gap-2'>
@@ -20,10 +30,22 @@ const Navbar = () => {
             <Link href='/create-prompt' className='black_btn'>
                 Create Prompt
             </Link>
+            <button type='button' onClick={signOut} className='outline_btn'>
+                Sign Out
+            </button>
+            <Link href='/profile' className='items-center'>
+              <Image src='/assets/images/logo.svg' height={40} width={40} alt='profile' className='rounded-full'>
+
+              </Image>
+            </Link>
           </div>
         ) : (
           <>
-
+            {providers && Object.values(providers).map((providers) => (
+              <button type='button' key={provider.name} onClick={() => signIn(provider.id)} className='black_btn'>
+                Sign In
+              </button>
+            ))}
           </>
         )
       }
