@@ -1,5 +1,7 @@
 import '@styles/global.css';
 import { Children } from 'react';
+import Navbar from '@components/Navbar';
+import Providers from '@components/Providers';
 
 export const metadata = {
     title : 'Prompt Engine',
@@ -16,6 +18,7 @@ const RootLayout = ({children }) => {
                 </div>
             </div>
             <main className='app'>
+                <Navbar/>
                 {children} 
             </main>
         </body>
